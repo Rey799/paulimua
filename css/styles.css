@@ -252,8 +252,9 @@ p { text-wrap: pretty; }
   min-height: 240px;
 }
 .hero__media .media { position: absolute; inset: 0; height: 100%; width: 100%; }
+/* Se ancla arriba para que la cabeza no quede cortada al recortar la foto. */
 .hero__media .media img,
-.hero__media .media video { width: 100%; height: 100%; object-fit: cover; }
+.hero__media .media video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0%; }
 
 .hero .media__ph { place-items: start center; padding-top: 22vh; }
 
