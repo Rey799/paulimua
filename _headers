@@ -1,0 +1,20 @@
+# Netlify lee este archivo para las cabeceras de cada respuesta.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+# La página principal se revalida siempre: así los cambios de contenido llegan al instante.
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# CSS, JavaScript, fotos y fuentes se guardan un día en el navegador del celular.
+/css/*
+  Cache-Control: public, max-age=86400
+
+/js/*
+  Cache-Control: public, max-age=86400
+
+/assets/*
+  Cache-Control: public, max-age=86400

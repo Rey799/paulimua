@@ -1,0 +1,697 @@
+/* ==========================================================================
+   Paulimua · Landing
+   Mobile-first. Breakpoints: 720px (tablet), 900px (hero en dos columnas),
+   1024px (escritorio).
+   ========================================================================== */
+
+/* 1. Tokens ------------------------------------------------------------- */
+/* Títulos: Tempting. Demo con licencia de uso personal: no tiene acentos
+   (á é í ó ú ñ), así que esas letras usan la fuente de respaldo. */
+@font-face {
+  font-family: "Tempting";
+  src: url("../assets/fonts/Tempting%20-%20PERSONAL%20USE%20ONLY.ttf") format("truetype");
+  font-display: swap;
+}
+/* Textos y subtítulos: Bebas Neue (SIL Open Font License). */
+@font-face {
+  font-family: "Bebas Neue";
+  src: url("../assets/fonts/BebasNeue-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+
+:root {
+  --cacao-950: #140F0C;
+  --cacao-900: #1F1612;
+  --cafe-800: #2E2119;
+  --cafe-700: #3A2A21;
+  --cafe-500: #6E5444;
+  --arena: #D8C5AF;
+  --beige: #EADCCB;
+  --crema: #F4ECE2;
+  --blanco: #FFFFFF;
+  --texto: #2B1D17;
+  --texto-suave: #5E5049;     /* sobre crema: ~6.8:1 */
+  --texto-claro: #CDBFB3;     /* sobre cacao: ~9:1 */
+
+  --font-title: "Tempting", Georgia, "Times New Roman", serif;
+  --font: "Bebas Neue", "Arial Narrow", Impact, sans-serif;
+
+  --radius: 4px;
+  --gutter: 16px;
+  --container: 1180px;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --header-h: 60px;
+}
+
+@media (min-width: 720px) {
+  :root { --gutter: 32px; --header-h: 72px; }
+}
+
+/* 2. Base --------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 1.2rem;
+  line-height: 1.35;
+  letter-spacing: .02em;
+  color: var(--texto);
+  background: var(--crema);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  font-synthesis: none; /* sin negritas falsas: cada fuente tiene un solo peso */
+}
+
+img, video { max-width: 100%; display: block; }
+h1, h2, h3, p, ul, ol, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: inherit; }
+
+/* Títulos centrados, con su propio margen para que el flotado no toque el texto de arriba. */
+h1, h2, h3 {
+  font-family: var(--font-title);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.05;
+  text-wrap: balance;
+  text-align: center;
+  margin-inline: auto;
+  margin-block: 14px;
+}
+h1 { font-size: clamp(2.6rem, 9vw, 5.2rem); }
+h2 { font-size: clamp(2.2rem, 6vw, 3.8rem); margin-bottom: 16px; }
+h3 { font-size: 1.8rem; margin-bottom: 8px; }
+
+p { text-wrap: pretty; }
+
+.eyebrow {
+  font-size: 1.05rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--cafe-500);
+  margin-bottom: 0;
+}
+/* Subtítulos en blanco sobre fondos oscuros. */
+.section--dark .eyebrow,
+.hero .eyebrow { color: var(--blanco); }
+
+.micro { font-size: 1.1rem; color: var(--texto-suave); }
+
+.skip-link {
+  position: absolute; left: 12px; top: -48px; z-index: 100;
+  background: var(--cacao-900); color: var(--beige);
+  padding: 10px 14px; border-radius: var(--radius);
+}
+.skip-link:focus { top: 12px; }
+
+:focus-visible {
+  outline: 2px solid var(--arena);
+  outline-offset: 3px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.container--narrow { max-width: 760px; }
+
+.section { padding-block: 72px; }
+.section--dark { background: var(--cacao-900); color: var(--beige); }
+.section--dark p { color: var(--texto-claro); }
+.section .container { text-align: center; }
+/* Párrafos de las secciones centrados; las preguntas frecuentes se quedan a la izquierda. */
+.section .container p { margin-inline: auto; }
+.section__lead {
+  max-width: 40ch;
+  margin-inline: auto;
+  font-size: 1.4rem;
+  color: var(--texto-suave);
+  margin-top: 14px;
+  margin-bottom: 36px;
+}
+.section--dark .section__lead { color: var(--blanco); }
+
+@media (min-width: 720px) {
+  .section { padding-block: 112px; }
+}
+
+/* 3. Buttons ------------------------------------------------------------ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 56px;
+  padding: 12px 26px;
+  border-radius: var(--radius);
+  font: inherit; font-size: 1.35rem; letter-spacing: .05em;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease), transform .25s var(--ease);
+}
+.btn:active { transform: translateY(1px); }
+
+.btn--primary { background: var(--beige); color: var(--cacao-900); }
+.btn--primary:hover { background: #fff; }
+
+.btn--secondary { background: var(--cafe-700); color: var(--crema); }
+.btn--secondary:hover { background: var(--cafe-500); }
+
+.btn--ghost { border-color: currentColor; background: transparent; }
+.btn--ghost:hover { background: rgba(255, 255, 255, .08); }
+.section:not(.section--dark) .btn--ghost { color: var(--texto); }
+.section:not(.section--dark) .btn--ghost:hover { background: rgba(43, 29, 23, .06); }
+
+.btn--small { min-height: 42px; padding: 6px 16px; font-size: 1.15rem; background: var(--beige); color: var(--cacao-900); }
+
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 28px; }
+.actions--center { justify-content: center; }
+
+/* WhatsApp e Instagram juntos, cada uno con su logo. */
+.social-pair {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+  margin-top: 28px;
+}
+.social-pair .btn { flex: 1 1 220px; max-width: 320px; }
+.btn--icon { gap: 10px; }
+.btn--icon svg { width: 20px; height: 20px; flex: none; }
+
+.icon-btn {
+  width: 52px; height: 52px;
+  display: inline-grid; place-items: center;
+  border: 1px solid rgba(234, 220, 203, .4);
+  border-radius: 50%;
+  background: transparent; color: var(--beige);
+  font-size: 1.2rem; cursor: pointer;
+  transition: background-color .25s var(--ease);
+}
+.icon-btn:hover { background: rgba(234, 220, 203, .1); }
+
+/* 4. Header ------------------------------------------------------------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  height: var(--header-h);
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding-inline: var(--gutter);
+  background: rgba(31, 22, 18, .92);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: var(--beige);
+}
+
+.brand {
+  font-family: var(--font-title);
+  font-size: 2rem;
+  line-height: 1;
+  letter-spacing: 0;
+  text-decoration: none;
+  white-space: nowrap;
+}
+/* Nombre de usuario de Instagram: botón de texto, sin bordes ni fondo. */
+.brand--handle {
+  display: inline-block;
+  padding: 0; margin: 0;
+  border: 0; background: none;
+  color: var(--beige);
+  cursor: pointer;
+  transition: opacity .25s var(--ease);
+}
+.brand--handle:hover { opacity: .75; }
+
+.site-nav { display: none; gap: 26px; }
+.site-nav a {
+  font-size: 1.15rem; letter-spacing: .06em; text-decoration: none; color: var(--texto-claro);
+  padding-block: 6px;
+  background: linear-gradient(currentColor, currentColor) bottom / 0 1px no-repeat;
+  transition: background-size .3s var(--ease), color .3s var(--ease);
+}
+.site-nav a:hover { color: var(--blanco); background-size: 100% 1px; }
+
+@media (min-width: 1024px) {
+  .site-nav { display: flex; }
+}
+
+/* 5. Hero --------------------------------------------------------------- */
+/* El título vive siempre dentro del bloque marrón. Solo el subtítulo puede
+   asomarse hacia la foto, y únicamente en escritorio. */
+.hero {
+  position: relative;
+  display: flex; flex-direction: column;
+  background: var(--cacao-900);
+  color: var(--beige);
+  overflow: hidden;
+}
+
+.hero__media {
+  position: relative;
+  height: 34svh;
+  min-height: 240px;
+}
+.hero__media .media { position: absolute; inset: 0; height: 100%; width: 100%; }
+.hero__media .media img,
+.hero__media .media video { width: 100%; height: 100%; object-fit: cover; }
+
+.hero .media__ph { place-items: start center; padding-top: 22vh; }
+
+.hero__media::after {
+  content: "";
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom, rgba(31, 22, 18, 0) 58%, var(--cacao-900) 100%);
+  pointer-events: none;
+}
+
+.hero__content {
+  position: relative; z-index: 2;
+  min-width: 0;
+  width: 100%; max-width: var(--container);
+  margin-inline: auto;
+  padding: 24px var(--gutter) 56px;
+  text-align: center;
+}
+.hero__content h1 { color: var(--beige); overflow-wrap: break-word; }
+.hero__content .lead {
+  color: var(--blanco);
+  max-width: 46ch;
+  margin-top: 18px;
+  margin-inline: auto;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  line-height: 1.2;
+}
+.hero__content .micro { color: var(--texto-claro); margin-top: 16px; }
+
+@media (min-width: 900px) {
+  /* Dos columnas: bloque marrón a la izquierda, foto a la derecha. */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    min-height: calc(100svh - var(--header-h));
+  }
+  .hero__media {
+    position: absolute; top: 0; right: 0; bottom: 0; left: 50%;
+    height: auto; min-height: 0;
+  }
+  .hero__media::after {
+    background: linear-gradient(to right, var(--cacao-900) 0%, rgba(31, 22, 18, .3) 24%, rgba(31, 22, 18, 0) 56%);
+  }
+  .hero__content {
+    grid-column: 1;
+    width: auto; max-width: none; margin: 0;
+    padding: 60px 40px 60px max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+  }
+  /* Todo el texto se queda dentro de su columna: nada cruza hacia la foto. */
+  .hero__content h1 { font-size: clamp(2.6rem, 4.4vw, 4.6rem); max-width: 100%; }
+  .hero__content .lead { max-width: 100%; }
+}
+
+/* 6. Trust strip -------------------------------------------------------- */
+/* Cintillo de noticias: el contenido se repite dos veces y la fila se
+   desplaza exactamente la mitad, así el bucle no se corta. */
+.trust { background: var(--beige); color: var(--texto); border-bottom: 1px solid rgba(43, 29, 23, .08); overflow: hidden; }
+.ticker { padding-block: 16px; }
+.ticker__track {
+  display: flex;
+  width: max-content;
+  animation: ticker-left 22s linear infinite;
+  will-change: transform;
+}
+.ticker__set {
+  display: flex; flex: none;
+  margin: 0; padding: 0;
+  list-style: none;
+}
+.ticker__set li {
+  position: relative;
+  padding-inline: 28px;
+  font-size: 1.4rem; letter-spacing: .08em; line-height: 1.2;
+  white-space: nowrap;
+}
+.ticker__set li::after {
+  content: "";
+  position: absolute; right: -3px; top: 50%;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--cafe-500);
+  transform: translateY(-50%);
+}
+@keyframes ticker-left {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+/* 7. Media (imagen, video o espacio reservado) -------------------------- */
+.media {
+  position: relative; overflow: hidden; margin: 0;
+  background: var(--cafe-800);
+}
+.media img,
+.media video { width: 100%; height: 100%; object-fit: cover; }
+
+.media__ph {
+  position: absolute; inset: 0;
+  display: grid; place-items: center; padding: 20px; text-align: center;
+  background:
+    radial-gradient(120% 80% at 30% 20%, rgba(216, 197, 175, .14), transparent 60%),
+    linear-gradient(170deg, var(--cafe-700), var(--cacao-950));
+  color: var(--arena);
+  font-size: 1rem; letter-spacing: .14em; text-transform: uppercase;
+}
+
+/* 8. Galería en movimiento --------------------------------------------- */
+/* Dos filas que se desplazan en direcciones opuestas. Cada fila contiene
+   dos bloques idénticos; la animación recorre exactamente uno, así que el
+   bucle es continuo. La duración la ajusta main.js para mantener la velocidad. */
+.showcase { overflow: hidden; }
+.showcase > .container { padding-bottom: 0; }
+
+.drift {
+  --drift-gap: 14px;
+  --drift-item-h: 300px;
+  --drift-duration: 90s;
+  position: relative;
+  display: grid;
+  gap: var(--drift-gap);
+  margin-top: 8px;
+}
+
+.drift__controls {
+  display: flex; justify-content: flex-end;
+  max-width: var(--container); width: 100%;
+  margin-inline: auto; padding-inline: var(--gutter);
+}
+
+.pause-btn {
+  min-height: 46px; padding: 6px 20px;
+  font: inherit; font-size: 1.15rem; letter-spacing: .05em;
+  color: var(--beige); background: transparent;
+  border: 1px solid rgba(234, 220, 203, .4); border-radius: 999px;
+  cursor: pointer;
+  transition: background-color .25s var(--ease);
+}
+.pause-btn:hover { background: rgba(234, 220, 203, .1); }
+
+.drift__row { overflow: hidden; }
+
+.drift__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: drift-left var(--drift-duration) linear infinite;
+}
+.drift__row--right .drift__track { animation-name: drift-right; }
+
+.drift__set {
+  display: flex;
+  gap: var(--drift-gap);
+  padding-right: var(--drift-gap); /* igual al hueco, para que los bloques sean exactos */
+}
+
+/* Tarjeta de cristal: bordes redondeados, borde translúcido y un brillo
+   diagonal. Blanco y negro hasta que el cursor la recorre; entonces crece
+   y recupera el color. */
+.drift__item {
+  flex: none;
+  height: var(--drift-item-h);
+  aspect-ratio: 4 / 5;
+  border-radius: 28px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, .32),
+    0 24px 40px -26px rgba(0, 0, 0, .8);
+  transition: transform .6s var(--ease), box-shadow .6s var(--ease);
+  transform-origin: center;
+}
+.drift__item::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, .34) 0%, rgba(255, 255, 255, .06) 34%, transparent 56%),
+    linear-gradient(to top, rgba(255, 255, 255, .10), transparent 28%);
+}
+.drift__item img {
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.06);
+  transition: filter .6s var(--ease);
+}
+.drift__item:hover {
+  transform: scale(1.12);
+  z-index: 2;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, .45),
+    0 34px 60px -28px rgba(0, 0, 0, .9);
+}
+.drift__item:hover img,
+.drift__item:focus-within img { filter: none; }
+
+.drift.is-paused .drift__track { animation-play-state: paused; }
+
+/* Pausa al pasar el cursor sobre una fila, solo en dispositivos con puntero. */
+@media (hover: hover) {
+  .drift__row:hover .drift__track { animation-play-state: paused; }
+}
+
+/* Títulos flotantes: suben y bajan en vertical, sin moverse de lado. Al subir,
+   la sombra se aleja (como si el texto se despegara de la superficie). Usan la
+   propiedad `translate` para no chocar con el revelado de entrada (`transform`).
+   Cada título recibe un retraso distinto desde main.js. */
+@keyframes title-float {
+  0%, 100% {
+    translate: 0 0;
+    text-shadow: 0 3px 10px rgba(0, 0, 0, .18);
+  }
+  50% {
+    translate: 0 -8px;
+    text-shadow: 0 16px 26px rgba(0, 0, 0, .10);
+  }
+}
+h1, h2, h3 {
+  animation: title-float 7s ease-in-out infinite;
+}
+
+@keyframes drift-left {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes drift-right {
+  from { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+
+@media (min-width: 720px) {
+  .drift { --drift-gap: 22px; --drift-item-h: 400px; }
+}
+@media (min-width: 1024px) {
+  .drift { --drift-item-h: 460px; }
+}
+
+/* 9. Problema / Promesa ------------------------------------------------- */
+.problem h2 { max-width: 20ch; }
+.problem p { font-size: 1.35rem; color: var(--texto-suave); max-width: 60ch; margin-top: 8px; }
+.problem p + p { margin-top: 16px; }
+
+.promise h2 { max-width: 22ch; }
+.promise p { font-size: 1.35rem; max-width: 60ch; margin-top: 8px; }
+
+/* 10. Servicios --------------------------------------------------------- */
+.services {
+  display: grid; gap: 16px;
+}
+.service {
+  display: flex; flex-direction: column;
+  text-align: center;
+  padding: 28px 24px;
+  background: #fff;
+  border: 1px solid rgba(43, 29, 23, .1);
+  border-radius: var(--radius);
+  transition: border-color .3s var(--ease), box-shadow .3s var(--ease), transform .3s var(--ease);
+}
+.service:hover {
+  border-color: rgba(43, 29, 23, .28);
+  box-shadow: 0 12px 30px -18px rgba(43, 29, 23, .45);
+}
+.service__text { color: var(--texto-suave); flex: 1; margin-bottom: 20px; font-size: 1.25rem; }
+.service__link {
+  align-self: center;
+  font-size: 1.25rem; letter-spacing: .05em; color: var(--cafe-700);
+  text-decoration: none;
+  padding-block: 6px;
+  background: linear-gradient(currentColor, currentColor) bottom / 100% 1px no-repeat;
+  transition: background-size .3s var(--ease);
+  min-height: 44px; display: inline-flex; align-items: center;
+}
+.service__link:hover { background-size: 100% 2px; }
+
+.service--featured { background: var(--cacao-900); color: var(--beige); border-color: transparent; }
+.service--featured .service__text { color: var(--texto-claro); }
+.service--featured .service__link { color: var(--beige); }
+
+@media (min-width: 720px) {
+  .services { grid-template-columns: repeat(2, 1fr); }
+  .service--featured { grid-column: span 2; padding: 40px; }
+}
+@media (min-width: 1024px) {
+  .services { grid-template-columns: repeat(3, 1fr); }
+  .service--featured { grid-column: span 2; }
+}
+
+/* 11. Testimonios: la misma galería en movimiento, con capturas ---------- */
+/* Cada captura conserva su proporción real: el ancho sale de su altura. */
+.drift--shots { --drift-item-h: 250px; }
+@media (min-width: 720px) {
+  .drift--shots { --drift-item-h: 300px; }
+}
+@media (min-width: 1024px) {
+  .drift--shots { --drift-item-h: 340px; }
+}
+.drift__item--shot { aspect-ratio: auto; }
+.drift__item--shot img { width: auto; height: 100%; max-width: none; }
+
+/* 12. Sobre Paulina ----------------------------------------------------- */
+.about__grid { display: grid; gap: 40px; align-items: center; }
+.about__photo { position: relative; }
+.about__photo .media { aspect-ratio: 4 / 5; border-radius: var(--radius); }
+.about__text p { color: var(--texto-suave); margin-top: 16px; max-width: 56ch; font-size: 1.3rem; }
+.about__text .btn { margin-top: 28px; color: var(--texto); }
+
+@media (min-width: 900px) {
+  .about__grid { grid-template-columns: 1fr 1fr; gap: 80px; }
+}
+
+/* 13. Proceso ----------------------------------------------------------- */
+.steps { display: grid; gap: 0; margin-top: 40px; counter-reset: none; }
+.step {
+  padding: 28px 0;
+  border-top: 1px solid rgba(234, 220, 203, .16);
+  display: grid; grid-template-columns: 1fr; justify-items: center;
+  text-align: center;
+}
+.step__num { font-family: var(--font-title); font-size: 2.2rem; color: var(--arena); line-height: 1; margin-bottom: 8px; }
+.step h3 { color: var(--beige); }
+.step p { font-size: 1.3rem; }
+
+@media (min-width: 900px) {
+  .steps { grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .step { border-top: 1px solid rgba(234, 220, 203, .16); padding-top: 32px; grid-template-columns: 1fr; }
+  .step__num { margin-bottom: 18px; }
+  .step h3, .step p { grid-column: auto; }
+}
+
+/* 14. Cursos (secundario) ----------------------------------------------- */
+.courses {
+  background: var(--crema);
+  border-top: 1px solid rgba(43, 29, 23, .1);
+  border-bottom: 1px solid rgba(43, 29, 23, .1);
+  padding-block: 56px;
+}
+.courses p { color: var(--texto-suave); margin-bottom: 24px; max-width: 56ch; font-size: 1.3rem; }
+.courses .btn--secondary { width: 100%; }
+@media (min-width: 720px) {
+  .courses { padding-block: 72px; }
+  .courses .btn--secondary { width: auto; }
+}
+
+/* 15. FAQ --------------------------------------------------------------- */
+.faq { margin-top: 32px; border-top: 1px solid rgba(43, 29, 23, .14); text-align: left; }
+.faq__item { border-bottom: 1px solid rgba(43, 29, 23, .14); }
+.faq__q {
+  position: relative;
+  cursor: pointer;
+  list-style: none;
+  padding: 20px 40px 20px 0;
+  font-size: 1.5rem; letter-spacing: .03em;
+  min-height: 52px;
+}
+.faq__q::-webkit-details-marker { display: none; }
+.faq__q::after {
+  content: "+";
+  position: absolute; right: 4px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.8rem; color: var(--cafe-500);
+  transition: transform .3s var(--ease);
+}
+.faq__item[open] .faq__q::after { transform: translateY(-50%) rotate(45deg); }
+.section .container .faq__a { margin-inline: 0; padding: 0 40px 22px 0; color: var(--texto-suave); max-width: 62ch; font-size: 1.25rem; }
+
+/* 16. CTA final --------------------------------------------------------- */
+.final-cta { text-align: center; }
+.final-cta h2 { max-width: 20ch; margin-inline: auto; }
+.final-cta p { color: var(--texto-claro); max-width: 46ch; margin: 0 auto; font-size: 1.4rem; }
+.final-cta .section__lead { margin-inline: auto; }
+
+/* 17. Footer ------------------------------------------------------------ */
+.site-footer {
+  background: var(--cacao-950);
+  color: var(--texto-claro);
+  padding-block: 48px 110px; /* espacio para la barra flotante en móvil */
+}
+.site-footer__inner { display: grid; gap: 20px; text-align: left; }
+.brand--footer { color: var(--beige); font-size: 2.4rem; margin-bottom: 6px; }
+.site-footer .micro { color: var(--texto-claro); }
+.footer-link { color: var(--beige); font-size: 1.3rem; letter-spacing: .05em; text-decoration: none; width: fit-content; min-height: 44px; display: inline-flex; align-items: center; background: linear-gradient(currentColor, currentColor) bottom / 100% 1px no-repeat; }
+.footer-link:hover { background-size: 100% 2px; }
+
+@media (min-width: 720px) {
+  .site-footer { padding-block: 56px; }
+  .site-footer__inner { grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; }
+  .site-footer__inner .micro:last-child { text-align: right; }
+}
+
+/* 18. CTA flotante ------------------------------------------------------ */
+.float-cta {
+  position: fixed; z-index: 60;
+  left: 12px; right: 12px; bottom: 12px;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 60px;
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  background: var(--beige);
+  color: var(--cacao-900);
+  font-size: 1.4rem; letter-spacing: .05em;
+  text-decoration: none;
+  box-shadow: 0 16px 32px -12px rgba(0, 0, 0, .55);
+}
+.float-cta:hover { background: #fff; }
+
+/* Antes de que JS decida, la barra siempre está visible. */
+.js .float-cta {
+  transform: translateY(160%);
+  opacity: 0;
+  transition: transform .45s var(--ease), opacity .45s var(--ease);
+  pointer-events: none;
+}
+.js .float-cta.is-shown { transform: none; opacity: 1; pointer-events: auto; }
+
+@media (min-width: 720px) {
+  .float-cta {
+    left: auto; right: 28px; bottom: 28px;
+    width: auto; min-height: 56px; padding-inline: 24px;
+    border-radius: 999px;
+  }
+}
+
+/* 19. Revelado de contenido --------------------------------------------- */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .8s var(--ease), transform .8s var(--ease);
+}
+.js .reveal.is-in { opacity: 1; transform: none; }
+
+/* 20. Movimiento reducido ----------------------------------------------- */
+/* Esta preferencia solo quita las transiciones de entrada y el scroll suave.
+   Las galerías y los títulos flotantes son parte del diseño pedido: siguen
+   moviéndose aunque el sistema tenga "reducir movimiento" activado. Cada
+   galería tiene su botón de pausa. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .001ms !important; }
+  .js .reveal { opacity: 1; transform: none; }
+  .js .float-cta { transform: none; }
+}
+
+/* 21. Utilidades -------------------------------------------------------- */
+[hidden] { display: none !important; }
